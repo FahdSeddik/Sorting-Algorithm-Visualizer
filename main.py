@@ -2,7 +2,7 @@ import pygame
 import random
 pygame.init()
 
-file = "pop.mp3"
+
 
 
 #to store all values needed later on the program 
@@ -265,13 +265,13 @@ def main():
             elif event.key == pygame.K_SPACE and sorting == False:
                 sorting = True
                 sorting_algoithm_generator = sorting_algorithm(draw_info)
-            elif event.key == pygame.K_q and sorting ==False:
+            elif event.key == pygame.K_q and sorting == False:
                 sorting_algorithm = quick_sort
                 sorting_algo_name = "Quick Sort"
-            elif event.key == pygame.K_i and sorting ==False:
+            elif event.key == pygame.K_i and sorting == False:
                 sorting_algorithm = insertion_sort
                 sorting_algo_name = "Insertion Sort"
-            elif event.key == pygame.K_s and sorting ==False:
+            elif event.key == pygame.K_s and sorting == False:
                 sorting_algorithm = selection_sort
                 sorting_algo_name = "Selection Sort"
                 
