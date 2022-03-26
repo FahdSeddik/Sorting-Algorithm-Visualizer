@@ -12,6 +12,7 @@ class DrawInformation:
     WHITE = 255, 255, 255
     GREEN = 0, 255, 0
     RED = 255, 0, 0
+    
     BACKGROUND_COLOR = WHITE
 
     #to be used in drawing bars
@@ -22,7 +23,7 @@ class DrawInformation:
     ]
 
     FONT = pygame.font.SysFont('courier', 20)
-    LARGE_FONT = pygame.font.SysFont('courier', 30)
+    LARGE_FONT = pygame.font.SysFont('courier', 30,True,True)
     SIDE_PAD = 100 #100 pixels in total as padding 
     TOP_PAD = 150 #top padding
 
@@ -60,7 +61,7 @@ class DrawInformation:
 def draw(draw_info, algo_name):
     draw_info.window.fill(draw_info.BACKGROUND_COLOR)
 
-    title = draw_info.LARGE_FONT.render(f"{algo_name}", 1, draw_info.BLACK)
+    title = draw_info.LARGE_FONT.render(f"{algo_name}", 1, draw_info.RED)
     draw_info.window.blit(title, (draw_info.width/2-title.get_width()/2, 5))
 
 
@@ -122,7 +123,7 @@ def partition(arr,l,h,draw_info):
             i = i+1
             arr[i],arr[j] = arr[j],arr[i]
             draw_list(draw_info,{arr[i]:draw_info.GREEN,arr[j]:draw_info.RED}, True)
-            pygame.event.wait(15)
+            pygame.event.wait(10)
   
     arr[i+1],arr[h] = arr[h],arr[i+1]
     return (i+1)
@@ -154,8 +155,7 @@ def quick_sort(draw_info):
         # Set pivot element at its correct position in
         # sorted array
         p = partition( arr, l, h ,draw_info)
-        yield True
-        
+        #yield True
         # If there are elements on left side of pivot,
         # then push left side to stack
         if p-1 > l:
@@ -164,7 +164,7 @@ def quick_sort(draw_info):
             top = top + 1
             stack[top] = p - 1
             draw_list(draw_info,{arr[top-1]:draw_info.GREEN,arr[top]:draw_info.RED}, True)
-            pygame.event.wait(15)
+            #pygame.event.wait(5)
             yield True
         
         # If there are elements on right side of pivot,
@@ -175,7 +175,7 @@ def quick_sort(draw_info):
             top = top + 1
             stack[top] = h
             draw_list(draw_info,{arr[top-1]:draw_info.GREEN,arr[top]:draw_info.RED}, True)
-            pygame.event.wait(15)
+            #pygame.event.wait(5)
             yield True
 
     return arr
@@ -189,15 +189,16 @@ def insertion_sort(draw_info):
 
         while True:
             sort = i>0 and lst[i-1] > current
+            draw_list(draw_info, {i-1:draw_info.GREEN, i:draw_info.RED},True)
+            yield True
 
             if not sort:
                 break
-
+            
             lst[i] = lst[i-1]
             i = i-1
             lst[i] = current
-            draw_list(draw_info, {i-1:draw_info.GREEN, i:draw_info.RED},True)
-            yield True
+            
     return lst
 
 
@@ -210,8 +211,8 @@ def selection_sort(draw_info):
         for j in range(i+1,len(lst)):
             if(lst[j] < lst[min_indx]):
                 min_indx = j
-        draw_list(draw_info, {i:draw_info.GREEN, min_indx:draw_info.RED},True)
-        yield True
+            draw_list(draw_info, {i:draw_info.GREEN, j:draw_info.RED},True)
+            yield True
         temp = lst[min_indx]
         lst[min_indx] = lst[i]
         lst[i]=temp
@@ -224,9 +225,9 @@ def main():
     run = True
     clock = pygame.time.Clock()
 
-    n=50
+    n=200
     min_val = 0
-    max_val = 100
+    max_val = 200
 
     lst = generate_starting_list(n,min_val,max_val)
     draw_info = DrawInformation(800,600,lst)
@@ -266,12 +267,24 @@ def main():
                 sorting = True
                 sorting_algoithm_generator = sorting_algorithm(draw_info)
             elif event.key == pygame.K_q and sorting == False:
+                if(n!=200):
+                    n=200
+                    lst = generate_starting_list(n,min_val,max_val)
+                    draw_info.set_list(lst)
                 sorting_algorithm = quick_sort
                 sorting_algo_name = "Quick Sort"
             elif event.key == pygame.K_i and sorting == False:
+                if(n!=50):
+                    n=50
+                    lst = generate_starting_list(n,min_val,max_val)
+                    draw_info.set_list(lst)
                 sorting_algorithm = insertion_sort
                 sorting_algo_name = "Insertion Sort"
             elif event.key == pygame.K_s and sorting == False:
+                if(n!=50):
+                    n=50
+                    lst = generate_starting_list(n,min_val,max_val)
+                    draw_info.set_list(lst)
                 sorting_algorithm = selection_sort
                 sorting_algo_name = "Selection Sort"
                 
