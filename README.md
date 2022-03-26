@@ -12,6 +12,6 @@ Implemented sorting algorithms:
 
 ## Display
 ![s1](https://github.com/FahdSeddik/Sorting-Algorithm-Visualizer/blob/master/Screenshot.png)  
-  
+![](https://github.com/FahdSeddik/Sorting-Algorithm-Visualizer/blob/master/Screenshot%202.png)
 
 
